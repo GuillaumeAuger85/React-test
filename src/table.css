@@ -1,0 +1,21 @@
+.table-firstRow{
+  display:flex;
+  justify-content: space-between;
+}
+
+.table-firstRow div{
+   border:1px solid grey;
+   flex: 1;
+   text-align: center;
+   padding: 0.5rem 0rem
+}
+
+.table-firstRow div:first-child{
+     border-left: 1px solid transparent;
+     border-top: none;
+}
+
+.table-firstRow div:nth-last-child(1),
+.table-firstRow div:nth-last-child(2){
+  border-left: none;
+}

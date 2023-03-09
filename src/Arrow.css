@@ -1,0 +1,9 @@
+.Arrow{
+    width: 6px;
+    height: 6px;
+    border: 2px solid black;
+    display: inline-block;
+    border-left:none;
+    border-top:none;
+    transform: rotate(-45deg);
+}

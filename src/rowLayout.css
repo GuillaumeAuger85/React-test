@@ -1,0 +1,39 @@
+.rowLayout {
+    --border: 1px solid grey;
+    display: flex;
+    justify-content: space-between;
+}
+
+.rowLayout div {
+    border: var(--border);
+    flex: 1;
+    padding: 0.5rem 0 0.5rem 0;
+}
+
+.rowLayout-localisation span:first-child {
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+/* .rowLayout-localisationspan:nth-of-type(2) {
+    margin-left: 0.8rem;
+} */
+
+
+.rowLayout-read,
+.rowLayout-write {
+    text-align: center;
+    border-bottom: none;
+}
+
+.rowLayout div:nth-last-child(3),
+.rowLayout div:nth-last-child(2),
+.rowLayout div:nth-last-child(1) {
+    border-top:none;
+    border-bottom: 1px solid grey;
+}
+
+.rowLayout div:nth-last-child(1),
+.rowLayout div:nth-last-child(2) {
+    border-left: none;
+}
