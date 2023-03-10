@@ -1,14 +1,15 @@
+import { useContext } from 'react';
 import RowLayout from "./RowLayout";
 import Arrow from "./Arrow";
 import Shop from "./Shop";
+import{ OpenSectorContext} from './contexts/OpenRawContext';
 
-const Sector = ({ name, sectorData, toggleSector, areSectorsToggled, id }) => {
-    const isSectorToggled = areSectorsToggled.filter(a => id === a.id)[0].toggled;
-    const arrowStyles = areSectorsToggled ? { transform: 'rotate(45deg)', marginLeft: '1.8rem' } : { transform: 'rotate(-45deg)', marginLeft: '1.8rem' }
-    const handleToggle = () => {
-        toggleSector(id)
-    }
-    const shops = sectorData.map(s => <Shop
+const Sector = ({ name, sectorData, id }) => {
+    const {areSectorsOpened, toggleOpenSector} = useContext(OpenSectorContext);
+    const isSectorOpened = areSectorsOpened.filter(a => id === a.id)[0].toggled;
+    const arrowStyles = areSectorsOpened ? { transform: 'rotate(45deg)', marginLeft: '1.8rem' } : { transform: 'rotate(-45deg)', marginLeft: '1.8rem' }
+    const handleToggle = () =>toggleOpenSector(id);
+ const shops = sectorData.map(s => <Shop
         key={s.id}
         id={s.id}
         name={s.name}
@@ -21,7 +22,7 @@ const Sector = ({ name, sectorData, toggleSector, areSectorsToggled, id }) => {
                 <div className="rowLayout-read"><input type="checkbox" /></div>
                 <div className="rowLayout-write"><input type="checkbox" /></div>
             </RowLayout >
-            {!isSectorToggled ? null : shops}
+            {!isSectorOpened ? null : shops}
         </div>
     )
 }

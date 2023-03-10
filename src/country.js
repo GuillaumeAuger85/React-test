@@ -1,22 +1,19 @@
 import RowLayout from "./RowLayout";
+import { useContext } from 'react';
 import Arrow from "./Arrow";
 import Area from "./Area";
+import { OpenCountryContext} from './contexts/OpenRawContext';
 
-function Country({ countryData, name, toggleCountry, areCountriesToggled, toggleArea, toggleSector, areAreasToggled, areSectorsToggled,id }) {
-    const isCountryToggled = areCountriesToggled.filter(a => id === a.id)[0].toggled;
-    const arrowStyles = isCountryToggled ? { transform: 'rotate(45deg)' } : { transform: 'rotate(-45deg)' };
-    const handleToggle = () =>{
-        toggleCountry(id)
-    }
+function Country({ countryData, name, id }) {
+    const { areCountriesOpened, toggleOpenCountry} = useContext(OpenCountryContext);
+    const isCountryOpened = areCountriesOpened.filter(a => id === a.id)[0].toggled;
+    const arrowStyles = isCountryOpened? { transform: 'rotate(45deg)' } : { transform: 'rotate(-45deg)' };
+    const handleToggle = () => toggleOpenCountry(id);
     const areas = countryData.map(c => <Area
         key={c.id}
         id={c.id}
         name={c.name}
         areaData={c.children}
-        areAreasToggled={areAreasToggled}
-        toggleArea={toggleArea}
-        areSectorsToggled={areSectorsToggled}
-        toggleSector={toggleSector}
     />)
     return (
         <div>
@@ -25,7 +22,7 @@ function Country({ countryData, name, toggleCountry, areCountriesToggled, toggle
                 <div className="rowLayout-read"><input type="checkbox" /></div>
                 <div className="rowLayout-write"><input type="checkbox" /></div>
             </RowLayout >
-            {!isCountryToggled ? null : areas}
+            {!isCountryOpened ? null : areas}
         </div>
     )
 }
