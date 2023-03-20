@@ -1,4 +1,4 @@
- import'./Arrow.css';
+ import'./styles/Arrow.css';
  
 const Arrow = ({arrowStyles}) => {
     return <span className="Arrow" style={arrowStyles}></span>

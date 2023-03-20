@@ -18,4 +18,5 @@
 .table-firstRow div:nth-last-child(1),
 .table-firstRow div:nth-last-child(2){
   border-left: none;
+  background-color: rgba(211, 211, 211, 0.545);
 }

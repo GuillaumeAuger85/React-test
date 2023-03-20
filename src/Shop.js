@@ -1,10 +1,14 @@
 import RowLayout from "./RowLayout";
 
-export default function Shop({ name }) {
+function Shop({ name, id}) {
+    const arrowStyles = { border: '2px solid transparent' }
     return (
-        <RowLayout >
-            <div className="rowLayout-localisation"><span style={{ marginLeft: '2rem' }} ></span><span>{name}</span></div>
-            <div className="rowLayout-read"><input type="checkbox" /></div>
-            <div className="rowLayout-write"><input type="checkbox" /></div>
-        </RowLayout >)
+        <RowLayout
+            id={id} name={name}
+            arrowStyles={arrowStyles}
+            key={`${name}${id}`}
+        />
+    )
 }
+
+export default Shop;

@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 
-export default function useToggleInArray(initialVals) {
+export default function useToggleRaws(initialVals) {
     const [state, setState] = useState(initialVals);
     const toggle = (id) => {
-       setState(prevSt => prevSt.map(st => st.id ===id?{id:st.id, toggled: !st.toggled}: st));
+        setState(prevSt => prevSt.map(st => st.id === id ? { id: st.id, opened: !st.opened } : st));
     };
     return [state, toggle];
 }

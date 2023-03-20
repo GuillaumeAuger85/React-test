@@ -1,0 +1,29 @@
+.Summary {
+    margin-top: 3rem;
+}
+.Summary-shops,.Summary-nodes{
+       flex:1;
+       padding-left:  1rem;
+;}
+.Summary-nodes{
+       border-left: 1px solid gray
+;}
+.Summary-ids {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    list-style-type: none;
+    border: 1px solid gray;
+}
+
+.Summary-ids ul {
+    list-style-type: none;
+}
+
+.Summary-read,.Summary-write{
+  margin-left:1rem
+}
+
+.Summary-li-ids{
+    margin-left:2rem
+}
