@@ -44,29 +44,40 @@ const getHighestNodeIds = (array) => {
         } else if (node.model_code === 'SECTOR') {
             const nodeIdAndDescendantsIds = [node.id].concat(nodeChildrenIds);
             return nodeIdAndDescendantsIds
-        } 
+        }
     }
-    const countries = array.filter(a => a.model_code === 'COUNTRY');
-    const areas = array.filter(a => a.model_code === "AREA");
-    const sectors = array.filter(a => a.model_code === "SECTOR");
-    const shopsIds = array.filter(i => i.model_code === "SHOP").map(shop => shop.id);
+    const countries = array.filter(el => el.model_code === 'COUNTRY');
+    const areas = array.filter(el => el.model_code === "AREA");
+    const sectors = array.filter(el => el.model_code === "SECTOR");
+    const shopsIds = array.filter(el => el.model_code === "SHOP").map(shop => shop.id);
+    const restIds = array.filter(el => el.model_code !== "COUNTRY");
+    console.log(restIds);
+
 
 
     const countriesChildrenToSubstract = countries.map(child => getAllDescendantIds(child)).flat();
     const areaChildrenToSubstract = areas.map(child => getAllDescendantIds(child)).flat();
+    console.log(areaChildrenToSubstract)
     const sectorChildrenToSubstract = sectors.map(child => getAllDescendantIds(child)).flat();
+    console.log(sectorChildrenToSubstract)
     const getAllToSubstract = () => {
         if ((countriesChildrenToSubstract.length < 1) && (areaChildrenToSubstract.length < 1) && (sectorChildrenToSubstract.length < 1)) {
-            return shopsIds;
-        } else if ((countriesChildrenToSubstract.length) < (1 && areaChildrenToSubstract.length < 1)) {
-            return sectorChildrenToSubstract.filter(id => !shopsIds.includes(id));
+            const restIds = array.filter(el => el.model_code !== "COUNTRY").filter(el => el.model_code !== "AREA").map(el => el.id);
+            return shopsIds.concat(restIds);
+        } else if ((countriesChildrenToSubstract.length < 1) && (areaChildrenToSubstract.length < 1)) {
+            const restIds = array.filter(el => el.model_code !== "COUNTRY").filter(el => el.model_code !== "AREA").map(el => el.id);
+            return sectorChildrenToSubstract.filter(id => !shopsIds.includes(id)).concat(restIds.filter(id => !sectorChildrenToSubstract.includes(id)));
         } else if (countriesChildrenToSubstract.length < 1) {
-            return areaChildrenToSubstract.filter(id => !sectorChildrenToSubstract.includes(id));
+            const restIds = array.filter(el => el.model_code !== "COUNTRY").map(el => el.id);
+            return areaChildrenToSubstract.filter(id=>!shopsIds.includes(id)).concat(restIds.filter(id => !areaChildrenToSubstract.includes(id))).filter(id => !sectorChildrenToSubstract.includes(id));
         } else if (countriesChildrenToSubstract.length > 0) {
-            return countriesChildrenToSubstract.filter(id => !areaChildrenToSubstract.includes(id)).filter(id => !sectorChildrenToSubstract.includes(id));
+            const restIds = array.map(el => el.id);
+            return countriesChildrenToSubstract.filter(id => !areaChildrenToSubstract.includes(id)).filter(id => !sectorChildrenToSubstract.includes(id)).concat(restIds.filter(id => !countriesChildrenToSubstract.includes(id)));
         }
     };
+
     const allToSubstract = new Set(getAllToSubstract());
+    console.log(allToSubstract)
     const highestnodeIds = arrayIds.filter(id => allToSubstract.has(id));
     return highestnodeIds;
 };
