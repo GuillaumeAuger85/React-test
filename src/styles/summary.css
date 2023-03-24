@@ -15,15 +15,3 @@
     list-style-type: none;
     border: 1px solid gray;
 }
-
-.Summary-ids ul {
-    list-style-type: none;
-}
-
-.Summary-read,.Summary-write{
-  margin-left:1rem
-}
-
-.Summary-li-ids{
-    margin-left:2rem
-}

@@ -27,59 +27,30 @@ const getFullFamilyLineIds = (ascendant, node) => {
 };
 
 
-const getHighestNodeIds = (array) => {
-    const arrayIds = array.map(a => a.id);
-    const getAllDescendantIds = (node) => {
-        const nodeChildrenIds = node.children.filter(child => !!child).map(c => c.id);
-        const nodeChildren = node.children.length > 0 && node.children.map(c => c.children).flat();
-        if (node.model_code === 'COUNTRY') {
-            const nodeGreatGrandChildrenIds = nodeChildren.map(n => n.children.map(child => child.id)).flat();
-            const nodeGrandChildrenIds = nodeChildren.map(n => n.id);
-            const nodeIdAndDescendantsIds = [node.id].concat(nodeChildrenIds.concat(nodeGrandChildrenIds).concat(nodeGreatGrandChildrenIds));
-            return nodeIdAndDescendantsIds
-        } else if (node.model_code === 'AREA') {
-            const nodeGrandChildrenIds = nodeChildren.map(n => n.id);
-            const nodeIdAndDescendantsIds = [node.id].concat(nodeChildrenIds.concat(nodeGrandChildrenIds));
-            return nodeIdAndDescendantsIds
-        } else if (node.model_code === 'SECTOR') {
-            const nodeIdAndDescendantsIds = [node.id].concat(nodeChildrenIds);
-            return nodeIdAndDescendantsIds
-        }
-    }
-    const countries = array.filter(el => el.model_code === 'COUNTRY');
-    const areas = array.filter(el => el.model_code === "AREA");
-    const sectors = array.filter(el => el.model_code === "SECTOR");
-    const shopsIds = array.filter(el => el.model_code === "SHOP").map(shop => shop.id);
-    const restIds = array.filter(el => el.model_code !== "COUNTRY");
-    console.log(restIds);
+const getHighestNodeIds = (checkedInputs, allInputs) => {
+    const allAuthorizedIds = checkedInputs.map(c => c.id);
+    const checkedCountries = checkedInputs.filter(input => input.model_code === "COUNTRY");
 
+    const countries = allInputs.filter(input => input.model_code === 'COUNTRY');
+    const authorizedCountriesIds = countries.filter(c => allAuthorizedIds.includes(c.id)).map(c => c.id);
+    const notAuthorizedCountries = countries.filter(c => !allAuthorizedIds.includes(c.id));
+    const notAuthorizedCountriesChildrenIds = notAuthorizedCountries.map(c => c.children).flat().map(area => area.id);
 
+    const areas = allInputs.filter(input => input.model_code === 'AREA');
+    const authorizedAreasIds = areas.filter(a => notAuthorizedCountriesChildrenIds.includes(a.id)).map(a => a.id).filter(id => allAuthorizedIds.includes(id));
+    const notAuthorizedAreas = areas.filter(a => !allAuthorizedIds.includes(a.id));
+    const notAuthorizedAreasChildrenIds = notAuthorizedAreas.map(c => c.children).flat().map(area => area.id);
 
-    const countriesChildrenToSubstract = countries.map(child => getAllDescendantIds(child)).flat();
-    const areaChildrenToSubstract = areas.map(child => getAllDescendantIds(child)).flat();
-    console.log(areaChildrenToSubstract)
-    const sectorChildrenToSubstract = sectors.map(child => getAllDescendantIds(child)).flat();
-    console.log(sectorChildrenToSubstract)
-    const getAllToSubstract = () => {
-        if ((countriesChildrenToSubstract.length < 1) && (areaChildrenToSubstract.length < 1) && (sectorChildrenToSubstract.length < 1)) {
-            const restIds = array.filter(el => el.model_code !== "COUNTRY").filter(el => el.model_code !== "AREA").map(el => el.id);
-            return shopsIds.concat(restIds);
-        } else if ((countriesChildrenToSubstract.length < 1) && (areaChildrenToSubstract.length < 1)) {
-            const restIds = array.filter(el => el.model_code !== "COUNTRY").filter(el => el.model_code !== "AREA").map(el => el.id);
-            return sectorChildrenToSubstract.filter(id => !shopsIds.includes(id)).concat(restIds.filter(id => !sectorChildrenToSubstract.includes(id)));
-        } else if (countriesChildrenToSubstract.length < 1) {
-            const restIds = array.filter(el => el.model_code !== "COUNTRY").map(el => el.id);
-            return areaChildrenToSubstract.filter(id=>!shopsIds.includes(id)).concat(restIds.filter(id => !areaChildrenToSubstract.includes(id))).filter(id => !sectorChildrenToSubstract.includes(id));
-        } else if (countriesChildrenToSubstract.length > 0) {
-            const restIds = array.map(el => el.id);
-            return countriesChildrenToSubstract.filter(id => !areaChildrenToSubstract.includes(id)).filter(id => !sectorChildrenToSubstract.includes(id)).concat(restIds.filter(id => !countriesChildrenToSubstract.includes(id)));
-        }
-    };
+    const sectors = allInputs.filter(input => input.model_code === 'SECTOR');
+    const authorizedSectorsIds = checkedCountries.length > 0 ? [] : sectors.filter(s => notAuthorizedAreasChildrenIds.includes(s.id)).map(s => s.id).filter(id => allAuthorizedIds.includes(id));
+    const notAuthorizedSectors = sectors.filter(s => !allAuthorizedIds.includes(s.id));
+    const notAuthorizedSectorsChildrenIds = notAuthorizedSectors.map(c => c.children).flat().map(area => area.id);
 
-    const allToSubstract = new Set(getAllToSubstract());
-    console.log(allToSubstract)
-    const highestnodeIds = arrayIds.filter(id => allToSubstract.has(id));
-    return highestnodeIds;
+    const shops = allInputs.filter(input => input.model_code === 'SHOP');
+    const authorizedShopsIds = checkedCountries.length > 0 ? [] : shops.filter(s => notAuthorizedSectorsChildrenIds.includes(s.id)).map(s => s.id).filter(id => allAuthorizedIds.includes(id));
+    const authorizedChildrenIds = [authorizedCountriesIds, authorizedAreasIds, authorizedSectorsIds, authorizedShopsIds].flat();
+
+    return authorizedChildrenIds;
 };
 
 export { getFullFamilyLineIds, getHighestNodeIds };
