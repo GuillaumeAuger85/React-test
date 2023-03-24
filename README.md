@@ -1,4 +1,23 @@
-# Getting Started with Create React App
+# React-test
+
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
+
+**REACT APP**<br>
+**Le principe est de faire un tableau hiérarchique que nous utilisons pour la définition des permissions.**<br>
+**On a un arbre de sectorisation pour lequel on peut ouvrir/fermer chaque noeud pour voir les noeuds enfants.**<br>
+**La sectorisation est accessible dans le fichier sectorisation.json en copie.**<br>
+**Pour chaque noeud, je veux pouvoir saisir si l'utilisateur est autorisé ou non (case à cocher).**<br>
+**Si je sélectionne un noeud, ça sélectionne tous ses fils. Si je désélectionne un fils, ça désélectionne le père mais ça laisse les frères sélectionnés.**<br>
+**Si je désélectionne un noeud, ça désélectionne tous ses fils.**<br>
+**Il faudrait avoir deux types de permissions (deux colonnes, genre « read » et « write ») et qu'à la fin, pour chaque permission, on puisse avoir une liste des noeuds feuilles sélectionnés dans un encart en dessous du tableau.**
+
+## Try it [here](https://guillaumeauger85.github.io/React-test/)!
+
+**Screenshot:**
+
+![ReactTest](https://user-images.githubusercontent.com/49698792/227603785-350d221d-52f0-4050-a1d0-71aea7d67ab2.PNG)
+
+## Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
