@@ -3,6 +3,7 @@
 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB) ![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white) ![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white) ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 
 **REACT APP**<br>
+Test technique React.<br>
 **Le principe est de faire un tableau hiérarchique que nous utilisons pour la définition des permissions.**<br>
 **On a un arbre de sectorisation pour lequel on peut ouvrir/fermer chaque noeud pour voir les noeuds enfants.**<br>
 **La sectorisation est accessible dans le fichier sectorisation.json en copie.**<br>
@@ -15,7 +16,7 @@
 
 **Screenshot:**
 
-![ReactTest](https://user-images.githubusercontent.com/49698792/227603785-350d221d-52f0-4050-a1d0-71aea7d67ab2.PNG)
+![demo](https://user-images.githubusercontent.com/49698792/228364306-6993d06f-e9f9-416a-99d9-6b93ef37f5f7.gif)
 
 ## Getting Started with Create React App
 
